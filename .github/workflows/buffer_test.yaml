@@ -13,7 +13,7 @@ jobs:
   sample_check:
     name: sample check
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' && git.ref_name == 'develop' }}
+    if: ${{ github.event_name == 'pull_request' && github.ref_name == 'develop' }}
     steps:
       - name: welcoming to develop branch
         run : echo "thanks for sending pull request to develop branch" 
