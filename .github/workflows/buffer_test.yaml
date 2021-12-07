@@ -1,0 +1,51 @@
+name: Buffer Test CI #change
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_test:
+    name: Build the test binary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Build
+        run: make build_test
+  execute_test:
+    name: Execute the testcases
+    runs-on: ubuntu-latest
+    needs: build_test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Run The Test
+        run: make execute_test
+  release:
+    name: Release the test binary in zip file format
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    needs: [build_test, execute_test]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Install the needed utils
+        run: |
+          sudo apt-get install zip
+          sudo apt-get install build-essential
+      - name: create executable in zip
+        run: |
+          zip buffer_test.zip buffer_test.out
+      - name: Create Release
+        uses: marvinpinto/action-automatic-releases@v1.1.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: latest
+          prerelease: true
+          title: Latest Buffer test Binary
+          files: buffer_test.zip
