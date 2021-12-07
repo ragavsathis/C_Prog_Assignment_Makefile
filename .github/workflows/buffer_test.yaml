@@ -1,4 +1,4 @@
-name: Buffer Test CI #change
+name: Buffer Test CI
 
 on:
   push:
@@ -45,11 +45,12 @@ jobs:
           echo "#### Executing the test cases completed  !!!!!!"
       - name: Adding test executable in zip format
         run: zip buffer_test.zip buffer_test.out
-      - name: Create Release
-        uses: marvinpinto/action-automatic-releases@v1.1.1
+      - name: Incremental tag release
+        uses: aurestic/incrementarl-create-release@master
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: ${{ github.ref_name }}
-          prerelease: true
-          title: Latest Buffer test Binary
-          files: buffer_test.zip
+          flag_branch: false
+          message: releasing the buffer test
+          prev_tag: ${{ github.ref_name }}
+          update_odoo_module_version: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
