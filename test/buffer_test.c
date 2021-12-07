@@ -26,6 +26,7 @@ void test_buffer_insert_extract_on_single_byte(void)
     TEST_ASSERT_EQUAL(144, value);
 
     // After buffer inserting, array elements would be changed as shown in comments
+    //
     TEST_ASSERT_EQUAL(64, sample_arr[0]);
     TEST_ASSERT_EQUAL(2, sample_arr[1]);
     TEST_ASSERT_EQUAL(3, sample_arr[2]);
