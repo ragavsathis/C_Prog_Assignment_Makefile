@@ -49,7 +49,7 @@ jobs:
         uses: marvinpinto/action-automatic-releases@v1.1.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: buffer_test_latest
+          automatic_release_tag: ${{ github.ref_name }}
           prerelease: true
           title: Latest Buffer test Binary
           files: buffer_test.zip
