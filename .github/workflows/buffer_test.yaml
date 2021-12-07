@@ -13,7 +13,7 @@ jobs:
   sample_check:
     name: sample check
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/develop'}}
+    if: (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'develop')
     steps:
       - name: welcoming to develop branch
         run : |
@@ -22,7 +22,7 @@ jobs:
   build_test:
     name: Build and execute the test binary
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' && github.ref_name == 'main' }}
+    if: (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'main')
     steps:
       - name: Checkout my code
         uses: actions/checkout@v2.3.4
