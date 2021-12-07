@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
-      - name: Checkout
+      - name: Checkout my code
         uses: actions/checkout@v2.3.4
       - name: Build the test binary
-        run: make build_test
+        run: |
+          make build_test
+          echo "Build test completed"
       - name: Execute the testcases
         run: make execute_test
   release:
@@ -25,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     steps:
-      - name: Checkout
+      - name: Checkout my code
         uses: actions/checkout@v2.3.4
       - name: Install the needed utils
         run: |
@@ -35,14 +37,14 @@ jobs:
         run: make build_test
       - name: Execute the testcases
         run: make execute_test
-      - name: create executable in zip
+      - name: Adding test executable in zip format
         run: |
           zip buffer_test.zip buffer_test.out
       - name: Create Release
         uses: marvinpinto/action-automatic-releases@v1.1.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: latest
+          automatic_release_tag: buffer_test_latest
           prerelease: true
           title: Latest Buffer test Binary
           files: buffer_test.zip
