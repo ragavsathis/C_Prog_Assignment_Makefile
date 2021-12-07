@@ -13,10 +13,12 @@ jobs:
   sample_check:
     name: sample check
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' && github.ref_name == 'develop' }}
+    if: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/develop'}}
     steps:
       - name: welcoming to develop branch
-        run : echo "thanks for sending pull request to develop branch" 
+        run : |
+          echo "thanks for sending pull request to develop branch" 
+          echo ${{ github.ref_name }}
   build_test:
     name: Build and execute the test binary
     runs-on: ubuntu-latest
@@ -51,6 +53,7 @@ jobs:
         run: |
           make execute_test
           echo "#### Executing the test cases completed  !!!!!!"
+          echo ${{ github.ref_name }}
       - name: Adding test executable in zip format
         run: zip buffer_test.zip buffer_test.out
       - name: Create Release
