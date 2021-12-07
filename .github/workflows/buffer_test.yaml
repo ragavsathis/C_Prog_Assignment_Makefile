@@ -20,7 +20,7 @@ jobs:
   build_test:
     name: Build and execute the test binary
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' && git.ref_name == 'main' }}
+    if: ${{ github.event_name == 'pull_request' && github.ref_name == 'main' }}
     steps:
       - name: Checkout my code
         uses: actions/checkout@v2.3.4
