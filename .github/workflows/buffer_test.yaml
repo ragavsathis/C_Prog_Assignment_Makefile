@@ -19,9 +19,11 @@ jobs:
       - name: Build the test binary
         run: |
           make build_test
-          echo "Build test completed"
+          echo "#### Build test step completed  !!!!!!"
       - name: Execute the testcases
-        run: make execute_test
+        run: |
+          make execute_test
+          echo "#### Executing the test cases completed  !!!!!!"
   release:
     name: Release the test binary in zip file format
     runs-on: ubuntu-latest
@@ -34,12 +36,15 @@ jobs:
           sudo apt-get install zip
           sudo apt-get install build-essential
       - name: Build the test binary
-        run: make build_test
-      - name: Execute the testcases
-        run: make execute_test
-      - name: Adding test executable in zip format
         run: |
-          zip buffer_test.zip buffer_test.out
+          make build_test
+          echo "#### Build test step completed  !!!!!!"
+      - name: Execute the testcases
+        run: |
+          make execute_test
+          echo "#### Executing the test cases completed  !!!!!!"
+      - name: Adding test executable in zip format
+        run: zip buffer_test.zip buffer_test.out
       - name: Create Release
         uses: marvinpinto/action-automatic-releases@v1.1.1
         with:
